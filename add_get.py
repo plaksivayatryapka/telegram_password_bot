@@ -26,27 +26,19 @@ def add_password(chat_id, df, login, password, master_password):
 
 def get_password(df, target_login, master_password):
     passwords = list()  # if >1 passwords for same login
-    for login, password, salt_password in zip(df['login'], df['password'], df['salt_password']):
-        print(f'target_login={target_login}, login={login}, pwd={password}, salt={salt_password}')
-        if get_login(df, target_login, master_password) == target_login:
+    for login, salt_login, password, salt_password in zip(df['login'],
+                                                          df['salt_login'],
+                                                          df['password'],
+                                                          df['salt_password']):
+
+        decrypted_login = get_decrypted(login, master_password, salt_login)
+        if decrypted_login == target_login:
             passwords.append(get_decrypted(password, master_password, salt_password))
 
     if passwords == list():
         return None
 
-    print(passwords)
-    if set(passwords) == set([None]):
-        return None
-    
     return passwords
-
-
-def get_login(df, target_login, master_password):
-    for login, salt in zip(df['login'], df['salt_login']):
-        login = get_decrypted(login, master_password, salt)
-        if login == target_login:
-            return login
-    return None
 
 
 def get_all_logins(df, master_password):
