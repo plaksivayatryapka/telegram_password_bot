@@ -21,6 +21,6 @@ def mail_send(df, recipient):
     mail_server = smtplib.SMTP_SSL('smtp.mail.ru', 465)
     mail_server.login(MAIL_FROM_LOGIN, MAIL_FROM_PASSWORD)
     msg['To'] = recipient  # получатель
-    mail_server.sendmail('telegram_test_bot@mail.ru', recipient, msg.as_string())
+    mail_server.sendmail(MAIL_FROM_LOGIN, recipient, msg.as_string())
     mail_server.close()
     return 
