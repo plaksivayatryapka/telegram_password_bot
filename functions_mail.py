@@ -17,7 +17,7 @@ def df_to_string(df):
 def mail_send(df, recipient):
     msg = MIMEMultipart()
     msg.attach(MIMEText(df_to_string(df), 'plain', 'utf-8'))
-    msg['From'] = 'telegram_test_bot@mail.ru'  # отправитель
+    msg['From'] = MAIL_FROM_LOGIN  # отправитель
     mail_server = smtplib.SMTP_SSL('smtp.mail.ru', 465)
     mail_server.login(MAIL_FROM_LOGIN, MAIL_FROM_PASSWORD)
     msg['To'] = recipient  # получатель
